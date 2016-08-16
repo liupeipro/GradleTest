@@ -94,7 +94,7 @@
 gradle projects 查看工程信息
 gradle clean 是执行清理任务，和make clean类似。
 gradle properites 用来查看所有属性信息。
-gradle tasks 会列出每个任务的描述，通过描述，我们大概能知道这些任务是干什么的.....。然后gradle task-name执行它就好。
+gradle tasks 查看Project中所有的Task。会列出每个任务的描述，通过描述，我们大概能知道这些任务是干什么的.....。然后gradle task-name执行它就好。
 
 
 
@@ -114,7 +114,8 @@ gradle tasks 会列出每个任务的描述，通过描述，我们大概能知�
       println "hello 1"
     }
 
-这里的“<<”表示追加的意思，即向hello中加入执行过程。我们还可以使用doLast来达到同样的效果：
+这里的“<<”表示追加的意思，即向hello中加入执行代码。Gradle提供了一套的DSL，它在底层依然是执行groovy，比如task关键字，就是一个groovy的方法，大括号之间的内容表示传递给task()方法的一个闭包。
+我们还可以使用doLast来达到同样的效果：
 
     task hello {
         doLast{
