@@ -270,7 +270,7 @@ A执行完后会接着执行B。
 #### 跳过任务
 Gradle 提供多种方式来跳过任务的执行
 
-1. 断言
+**使用断言来决定任务是否执行**
 
 你可以使用 onlyIf()方法将断言附加到一项任务中。如果断言结果为 true，才会执行任务的操作。你可以用一个闭包来实现断言。闭包会作为一个参数传给任务，并且任务应该执行时返回true，或任务应该跳过时返回false。断言只在任务要执行前才计算。
 
@@ -280,7 +280,8 @@ Gradle 提供多种方式来跳过任务的执行
 
     hello.onlyIf { true }
 
-2. 使用 StopExecutionException
+
+**抛出 StopExecutionException 来跳过该task**
 
 如果跳过任务的规则不能与断言同时表达，您可以使用 StopExecutionException 。如果一个操作（action）抛出了此异常，那么这个操作（action）接下来的行为和这个任务的其他 操作（action）都会被跳过。构建会继续执行下一个任务
 
@@ -315,20 +316,6 @@ Gradle中有一些默认约定的任务:
 assemble, check 和 build 任务实际上并不做任何事情，它们其实只是为插件提供了一个钩子，真正的事情都是由插件来完成的。
 
 这样的话，开发人员就不需要关心我到底运行的是一个java项目还是一个Android项目，也不用关心我到底使用了哪些gradle插件，因为我都可以调用这些约定的任务来完成构建。
-
-	plugin就是Groovy库，就是groovy代码。
-	插件(‘com.android.application’、‘com.android.library’)的核心工作就是定义和执行Task。
-	想要完成某个的构建流程，必须导入合适的插件，这些插件中定义并执行了构建Project所需的一系列Task。
-	
-	**插件的导入**：使用 apply plugin: 
-
-	apply plugin:‘com.android.application’ 表示使用这个插件来构建Project，它负责定义和执行一系列Task，它有4个顶级任务：
-
-    * assemble 构建项目的输出
-    * check 进行检查教验工作
-    * build 执行
-    * 任务和check任务
-    * clean 清除项目的输出
 
 
 ## 常用命令
@@ -561,6 +548,14 @@ build.gradle :
     https://chaosleong.gitbooks.io/gradle-for-android/content/index.html
 
 
+## 自定义Plugin
+注入方式：
+
+Gradle支持3种形式的定制Plugin注入：
+
+1. 直接把Plugin源代码直接写在Build Script里面。（在build.gradle脚本中直接使用）
+2. 把Pluigin源代码写到rootProjectDir/buildSrc/src/main/groovy目录下（在buildSrc中使用）
+3. 用一个单独的project来写Plugin源代码，然后以jar依赖的形式注入项目（在独立Module中使用）
 
 
 
